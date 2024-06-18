@@ -8,14 +8,14 @@ public class JudgeConfig {
     /**
      * 时间限(ms)
      */
-    private long timeLimit;
+    private int timeLimit;
     /**
      * 内存限制(KB)
      */
-    private long memoryLimit;
+    private int memoryLimit;
 
     /**
      * 堆栈限制(KB)
      */
-    private long stackLimit;
+    private int stackLimit;
 }

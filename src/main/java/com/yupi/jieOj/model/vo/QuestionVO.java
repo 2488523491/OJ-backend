@@ -1,6 +1,5 @@
 package com.yupi.jieOj.model.vo;
 
-import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
@@ -18,79 +17,67 @@ import java.util.List;
 
 /**
  * 题目表
+ *
  * @TableName question
  */
-@TableName(value ="question")
+@TableName(value = "question")
 @Data
 public class QuestionVO implements Serializable {
+    @TableField(exist = false)
+    private static final long serialVersionUID = 1L;
     /**
      * id
      */
     @TableId(type = IdType.AUTO)
     private Long id;
-
     /**
      * 标题
      */
     private String title;
-
     /**
      * 内容
      */
     private String content;
-
     /**
      * 标签列表（json 数组）
      */
     private List<String> tags;
-
     /**
      * 题目答案
      */
     private String answer;
-
     /**
      * 通过数
      */
     private Integer submitNum;
-
     /**
      * 提交数
      */
     private Integer acceptNum;
-
     /**
      * 判题用例（json数组）
      */
-    private JudgeCase judgeCase;
-
+    private List<JudgeCase> judgeCase;
     /**
      * 判题配置（json对象）
      */
     private JudgeConfig judgeConfig;
-
     /**
      * 创建用户 id
      */
     private Long userId;
-
     /**
      * 创建时间
      */
     private Date createTime;
-
     /**
      * 更新时间
      */
     private Date updateTime;
-
     /**
      * 创建人信息
      */
     private UserVO useVO;
-
-    @TableField(exist = false)
-    private static final long serialVersionUID = 1L;
 
     /**
      * 包装类转对象,用于存入数据库，将集合和字符串转为json字符串存入数据库
@@ -105,16 +92,16 @@ public class QuestionVO implements Serializable {
         Question question = new Question();
         BeanUtils.copyProperties(questionVO, question);
         List<String> tagList = questionVO.getTags();
-       if(tagList != null){
-           question.setTags(JSONUtil.toJsonStr(tagList));
-       }
+        if (tagList != null) {
+            question.setTags(JSONUtil.toJsonStr(tagList));
+        }
         JudgeConfig judgeConfig = questionVO.getJudgeConfig();
-       if(judgeConfig != null){
-           question.setJudgeConfig(JSONUtil.toJsonStr(judgeConfig));
-       }
-        JudgeCase judgeCase = questionVO.getJudgeCase();
-        if(judgeCase != null){
-            question.setJudgeCase(JSONUtil.toJsonStr(judgeCase));
+        if (judgeConfig != null) {
+            question.setJudgeConfig(JSONUtil.toJsonStr(judgeConfig));
+        }
+        List<JudgeCase> judgeCaseList = questionVO.getJudgeCase();
+        if (judgeCaseList != null) {
+            question.setJudgeCase(JSONUtil.toJsonStr(judgeCaseList));
         }
         return question;
     }
@@ -134,13 +121,12 @@ public class QuestionVO implements Serializable {
         List<String> tagList = JSONUtil.toList(question.getTags(), String.class);
         questionVO.setTags(tagList);
         String judgeConfigStr = question.getJudgeConfig();
-        int i = judgeConfigStr.indexOf("{");
-        judgeConfigStr = judgeConfigStr.substring(i);
+        System.out.println("________________");
+        System.out.println(judgeConfigStr);
         questionVO.setJudgeConfig(JSONUtil.toBean(judgeConfigStr, JudgeConfig.class));
+        System.out.println(JSONUtil.toBean(judgeConfigStr, JudgeConfig.class));
         String judgeCaseStr = question.getJudgeCase();
-        int j =  judgeCaseStr.indexOf("{");
-        judgeCaseStr = judgeCaseStr.substring(j);
-        questionVO.setJudgeCase(JSONUtil.toBean(judgeCaseStr,JudgeCase.class));
+        questionVO.setJudgeCase(JSONUtil.toList(judgeCaseStr, JudgeCase.class));
         return questionVO;
     }
 

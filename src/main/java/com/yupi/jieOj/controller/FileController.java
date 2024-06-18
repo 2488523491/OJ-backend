@@ -6,7 +6,7 @@ import com.yupi.jieOj.common.ErrorCode;
 import com.yupi.jieOj.common.ResultUtils;
 import com.yupi.jieOj.constant.FileConstant;
 import com.yupi.jieOj.exception.BusinessException;
-import com.yupi.jieOj.manager.CosManager;
+import com.yupi.jieOj.manner.CosManager;
 import com.yupi.jieOj.model.dto.file.UploadFileRequest;
 import com.yupi.jieOj.model.entity.User;
 import com.yupi.jieOj.model.enums.FileUploadBizEnum;
@@ -25,10 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 /**
  * 文件接口
- *
- * @author <a href="https://github.com/liyupi">程序员鱼皮</a>
- * @from <a href="https://yupi.icu">编程导航知识星球</a>
- */
+ * */
 @RestController
 @RequestMapping("/file")
 @Slf4j

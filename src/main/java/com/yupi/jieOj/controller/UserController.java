@@ -44,10 +44,7 @@ import static com.yupi.jieOj.service.impl.UserServiceImpl.SALT;
 
 /**
  * 用户接口
- *
- * @author <a href="https://github.com/liyupi">程序员鱼皮</a>
- * @from <a href="https://yupi.icu">编程导航知识星球</a>
- */
+ * */
 @RestController
 @RequestMapping("/user")
 @Slf4j
@@ -70,15 +67,19 @@ public class UserController {
     @PostMapping("/register")
     public BaseResponse<Long> userRegister(@RequestBody UserRegisterRequest userRegisterRequest) {
         if (userRegisterRequest == null) {
+            System.out.println("请求为空");
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
         String userAccount = userRegisterRequest.getUserAccount();
         String userPassword = userRegisterRequest.getUserPassword();
         String checkPassword = userRegisterRequest.getCheckPassword();
+        System.out.println("二次密码为"+checkPassword);
         if (StringUtils.isAnyBlank(userAccount, userPassword, checkPassword)) {
             return null;
         }
-        long result = userService.userRegister(userAccount, userPassword, checkPassword);
+        String userName = userRegisterRequest.getUserName();
+        System.out.println("用户进来了"+userRegisterRequest.getUserAccount());
+        long result = userService.userRegister(userAccount, userPassword, checkPassword,userName);
         return ResultUtils.success(result);
     }
 
